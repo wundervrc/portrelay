@@ -88,7 +88,11 @@ destinations, and nothing on my home network is exposed.
    `apt purge netfilter-persistent iptables-persistent`, delete /etc/iptables/rules.v4,
    flush iptables, reboot.
 8. Install tailscale, run `tailscale up`, install ufw and allow SSH only on tailscale0.
-   Tag the machine(s) in the admin console so it can not SSH out. I tagged both the vps and any game servers I plan to have players connect to, so I can SSH in but they can not SSH out. ie: relay or game server gets pwned, they can't ssh into my tailnet devices since they are tagged.
+   Tag the machine(s) in the admin console so they can not SSH into your tailnet devices.
+   I tagged both the VPS and the game servers players connect to, so I can SSH in but
+   they can not SSH out. One caveat: tags and ACLs only govern tailnet traffic. A pwned
+   box can still attack its own physical LAN, so put public facing machines on their own
+   VLAN if you can.
 9. Install PortRelay (init, then the router page) and forward your game ports.
 
 Destination machines do not even need tailscale. Any IP the relay can reach works, pick

@@ -91,8 +91,8 @@ destinations, and nothing on my home network is exposed.
 10. Install PortRelay (init, then the router page) and forward your game ports.
 
 Destination machines do not even need tailscale. Any IP the relay can reach works, pick
-the custom IP option in the wizard. I run tailscale on all of mine anyway: tailscale machine
-names, static tailscale ips, ACL is all very valuable to me.
+the custom IP option in the wizard. I run tailscale on all of mine anyway: machine names,
+static tailscale IPs and ACLs are all very valuable to me.
 
 MIT. Made with GLM 5.3 Flash. Built and tested by wundervrc, first tested with a
 Minecraft (Pumpkin) game server.

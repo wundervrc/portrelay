@@ -68,8 +68,7 @@ sudo ufw reload
 
 ## My setup: a free Oracle Cloud relay
 
-This is the exact recipe I use. A free Oracle VPS is the relay, my home machines are the
-destinations, and nothing on my home network is exposed.
+This is the exact recipe I use. A free Oracle VPS is the relay for any machines I want accessible over the web
 
 1. Sign up at oracle.com/cloud/free. Pick the home region closest to you, it can never be
    changed. A card is required. Oracle puts a temporary hold on it (mine was 130 CAD) and

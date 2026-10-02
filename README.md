@@ -19,7 +19,7 @@ sudo ./portrelay.sh
 
 ```
 ╭──────────────────────────────────────────────────────────────╮
-│ PortRelay  v0.1.0 — tailnet relay port forwards              │
+│ PortRelay  v0.1.0, tailnet relay port forwards               │
 ╰──────────────────────────────────────────────────────────────╯
 
   ID   EN  IFACE      PROTO EPORT   DESTINATION

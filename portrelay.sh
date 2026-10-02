@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ============================================================================
-#  PortRelay — a tiny "home-router page" for tailnet relay boxes.
+#  PortRelay: a tiny "home-router page" for tailnet relay boxes.
 #
 #  What it does
 #    Manages port-forwarding rules on THIS machine (the relay):
@@ -130,7 +130,7 @@ gen_block() {
     done
 }
 
-ufw_rule_text() { # $1 = record -> the exact `ufw route ...` argument string
+ufw_rule_text() { # $1 = record: builds the exact ufw route argument string
     local id=$(field "$1" 0) iface=$(field "$1" 2) proto=$(field "$1" 3)
     local ext=$(field "$1" 4) dip=$(field "$1" 6) dport=$(field "$1" 7)
     local in_part=""
@@ -139,9 +139,9 @@ ufw_rule_text() { # $1 = record -> the exact `ufw route ...` argument string
 }
 
 apply() {
-    [[ -f $STATE_FILE ]] || die "no state file — run 'portrelay init' first"
+    [[ -f $STATE_FILE ]] || die "no state file, run portrelay init first"
     if ! grep -qF "$MARK_BEGIN" "$UFW_FILE"; then
-        die "no $MARK_BEGIN markers in $UFW_FILE — run 'portrelay init' (or migrate manually, see README)"
+        die "no $MARK_BEGIN markers in $UFW_FILE, run portrelay init (or migrate manually, see README)"
     fi
 
     # 1) backup before.rules (keep last 5)
@@ -194,7 +194,7 @@ cmd_init() {
     mkdir -p "$STATE_DIR"
     [[ -f $STATE_FILE ]] || : > "$STATE_FILE"
     if grep -qF "$MARK_BEGIN" "$UFW_FILE"; then
-        echo "markers already present — nothing to do"
+        echo "markers already present, nothing to do"
     elif grep -q '^\*nat' "$UFW_FILE"; then
         die "$UFW_FILE already has a *nat section without portrelay markers.
 Migrate manually (wrap your -A lines in $MARK_BEGIN/$MARK_END, keep *nat/:lines/COMMIT), then re-run apply."
@@ -311,7 +311,7 @@ draw() {
     echo "${C_B}╰──────────────────────────────────────────────────────────────╯${C_R}"
     echo
     if [[ ${#FORWARDS[@]} -eq 0 ]]; then
-        echo "  ${C_DIM}(no forwards yet — press A to add one)${C_R}"
+        echo "  ${C_DIM}(no forwards yet, press A to add one)${C_R}"
     else
         printf "  ${C_DIM}%-4s %-3s %-12s %-5s %-8s %s${C_R}\n" ID EN IFACE PROTO EPORT "DESTINATION"
         local f en
@@ -371,7 +371,7 @@ wizard_add() {
     local iface=$iface
     read -r -p "external port (arriving on this machine): " ext
     valid_port "$ext" || { pause "bad port"; return 1; }
-    read -r -p "protocol — [t]cp, [u]dp, [b]oth: " p
+    read -r -p "protocol, [t]cp, [u]dp or [b]oth: " p
     local proto
     case $p in t*|T*) proto=tcp;; u*|U*) proto=udp;; b*|B*) proto="tcp udp";; *) pause "bad proto"; return 1;; esac
     pick_dest         || return 1

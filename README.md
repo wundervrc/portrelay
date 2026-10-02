@@ -47,6 +47,18 @@ the firewall file before every change, in /etc/portrelay/backups.
 
 Open the same ports in your provider firewall too. PortRelay only manages this machine.
 
+## Precautions
+
+All players share this machine's IP once forwarded. Ban by player name, never by IP,
+or you ban everyone at once. IP bans work again if you front the server with a proxy
+that passes real client IPs, like proxy protocol or velocity forwarding (pumpkin has
+a setting for the latter).
+
+Give every public facing machine a tailscale tag and an ACL that blocks it from starting
+connections to your other devices. It should receive traffic and accept your SSH. Nothing
+else. The rules live in the tailscale admin console (login.tailscale.com), not on the
+machines, so a hacked box cannot rewrite them.
+
 ## Uninstall
 
 ```bash

@@ -307,7 +307,7 @@ cmd_remove_all() {
 draw() {
     clear
     echo "${C_B}╭──────────────────────────────────────────────────────────────╮${C_R}"
-    echo "${C_B}│${C_R} ${C_G}PortRelay${C_R}  ${C_DIM}v$VERSION — tailnet relay port forwards${C_R}          ${C_B}│${C_R}"
+    echo "${C_B}│${C_R} ${C_G}PortRelay${C_R}  ${C_DIM}v$VERSION tailnet relay port forwards${C_R}          ${C_B}│${C_R}"
     echo "${C_B}╰──────────────────────────────────────────────────────────────╯${C_R}"
     echo
     if [[ ${#FORWARDS[@]} -eq 0 ]]; then

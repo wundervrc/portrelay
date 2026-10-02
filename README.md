@@ -74,29 +74,25 @@ destinations, and nothing on my home network is exposed.
 1. Sign up at oracle.com/cloud/free. Pick the home region closest to you, it can never be
    changed. A card is required. Oracle puts a temporary hold on it (mine was 130 CAD) and
    refunds it automatically.
-2. Wait for the account ready email, then upgrade to Pay As You Go: profile menu, Tenancy,
-   Upgrade to Paid. This stops Oracle from stopping idle free VMs. Everything within the
+2. Wait for the account ready email, then upgrade to Pay As You Go: 
+   This stops Oracle from stopping idle free VMs. Everything within the
    Always Free limits stays 0 dollars.
 3. Add a budget alert under Billing, Budgets. If anything ever bills, you get an email
-   instead of a surprise.
-4. Create instance. Shape VM.Standard.E2.1.Micro with the Always Free badge, capacity type
-   On demand, image Ubuntu LTS, paste your SSH public key.
-5. Networking: let it create the VCN and check that a public IPv4 gets assigned.
-6. On the instance networking page, edit the IPv4 address and switch the public IP from
-   ephemeral to reserved. It now survives stop and start, so your DNS record never goes
-   stale.
+   instead of a surprise. (Ie: someone hacked your oracle account)
+4. Create instance. Shape with the Always Free badge, capacity type
+   On demand, image Ubuntu LTS,let it create the VCN, add your SSH public key.
+5. Networking: Reserve a public ip, apply that reserved public ip to your vcn that was created before.
 7. In the VCN security list, add ingress rules for your game ports, for example TCP 25565
-   and UDP 19132 from 0.0.0.0/0. Leave the source port range empty, that field is a trap.
+   and UDP 19132 from 0.0.0.0/0. Leave the source port range empty.
 8. SSH in and strip the firewall rules Oracle ships with Ubuntu:
    `apt purge netfilter-persistent iptables-persistent`, delete /etc/iptables/rules.v4,
-   flush iptables, reboot. Then install ufw and allow SSH only on tailscale0.
-9. Install tailscale, run `tailscale up`, tag the machine in the admin console and write
-   an ACL so it can only reach the game ports on your destination machines.
+   flush iptables, reboot.
+9. Install tailscale, run `tailscale up`, install ufw and allow SSH only on tailscale0. Tag the machine in the admin console so that it can't ssh out. (Tag the vps and any machine you don't want to have ssh out with the tag. I have both that machine and this vps tagged so I can ssh in but they can't ssh out. mmmm if the machine was owned it could still lan, ideally at some point I set up a vlan for the public facing machines)
 10. Install PortRelay (init, then the router page) and forward your game ports.
 
 Destination machines do not even need tailscale. Any IP the relay can reach works, pick
-the custom IP option in the wizard. I run tailscale on all of mine anyway: static machine
-names, ACLs, and I can move a game server between machines without touching the relay.
+the custom IP option in the wizard. I run tailscale on all of mine anyway: tailscale machine
+names, static tailscale ips, ACL is all very valuable to me.
 
 MIT. Made with GLM 5.3 Flash. Built and tested by wundervrc, first tested with a
 Minecraft (Pumpkin) game server.

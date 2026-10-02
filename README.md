@@ -50,9 +50,8 @@ Open the same ports in your provider firewall too. PortRelay only manages this m
 ## Precautions
 
 All players share this machine's IP once forwarded. Ban by player name, never by IP,
-or you ban everyone at once. IP bans work again if you front the server with a proxy
-that passes real client IPs, like proxy protocol or velocity forwarding (pumpkin has
-a setting for the latter).
+or you ban everyone at once. IP bans work again if you front the game server with a
+proxy that passes real client IPs, like proxy protocol or velocity style forwarding.
 
 Give every public facing machine a tailscale tag and an ACL that blocks it from starting
 connections to your other devices. It should receive traffic and accept your SSH. Nothing
@@ -68,4 +67,5 @@ sudo sed -i '/# BEGIN PORTRELAY/,/# END PORTRELAY/d' /etc/ufw/before.rules
 sudo ufw reload
 ```
 
-MIT. Made with GLM 5.3 Flash. Tested on a real server by wundervrc.
+MIT. Made with GLM 5.3 Flash. Built and tested by wundervrc, first tested with a
+Minecraft (Pumpkin) game server.

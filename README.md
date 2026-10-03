@@ -66,7 +66,7 @@ sudo sed -i '/# BEGIN PORTRELAY/,/# END PORTRELAY/d' /etc/ufw/before.rules
 sudo ufw reload
 ```
 
-## My setup: a free Oracle Cloud relay
+## My setup: a free Oracle Cloud relay for Pumpkin MC
 
 This is the exact recipe I use. A free Oracle VPS is the relay for any machines I want accessible over the web
 
@@ -82,7 +82,7 @@ This is the exact recipe I use. A free Oracle VPS is the relay for any machines 
 5. Networking: reserve a public IP, then apply that reserved IP to your VNIC. It survives
    stop and start, so your DNS record never goes stale.
 6. In the VCN security list, add ingress rules for your game ports, for example TCP 25565
-   and UDP 19132 from 0.0.0.0/0. Leave the source port range empty.
+   and UDP&TCP 19132 from 0.0.0.0/0. Leave the source port range empty.
 7. SSH in and strip the firewall rules Oracle ships with Ubuntu:
    `apt purge netfilter-persistent iptables-persistent`, delete /etc/iptables/rules.v4,
    flush iptables, reboot.

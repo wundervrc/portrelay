@@ -223,6 +223,10 @@ SKEL
 }
 
 # ------------------------------------------------------------ commands ------
+ts_name_for_ip() { # $1 = IPv4 -> tailscale hostname if known
+    tailscale status 2>/dev/null | awk -v ip="$1" '$1 == ip {print $2; exit}'
+}
+
 cmd_add() {
     local iface=$1 ext=$2 proto=$3 dest=$4 dport=$5 name=${6:-}
     [[ $iface == any ]] || ip link show "$iface" >/dev/null 2>&1 || die "no such interface: $iface"
@@ -230,7 +234,12 @@ cmd_add() {
     valid_port "$dport" || die "bad destination port: $dport"
     case $proto in tcp|udp|both) ;; *) die "proto must be tcp, udp, or both";; esac
     local dip; dip=$(resolve_dest "$dest")
-    [[ -n $name ]] || name=$dest
+    local tsname; tsname=$(ts_name_for_ip "$dip" || true)
+    if [[ -n $tsname ]]; then
+        name=$tsname
+    elif [[ -z $name ]]; then
+        name=$dest
+    fi
     local protos="$proto"; [[ $proto == both ]] && protos="tcp udp"
     local p
     for p in $protos; do
